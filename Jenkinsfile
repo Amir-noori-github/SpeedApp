@@ -1,17 +1,18 @@
 pipeline {
     agent any
     tools {
-    maven 'Maven-3.9.12'
+        maven 'Maven-3.9.12'
     }
     stages {
         stage('Check') {
             steps {
-                git 'https://github.com/Amir-noori-github/SpeedApp.git'
+                git branch: 'main', url: 'https://github.com/Amir-noori-github/SpeedApp.git'
             }
         }
+
         stage('Build') {
             steps {
-                bat 'mvn clean install' // sh for linux and ios
+                bat 'mvn clean install'
             }
         }
 
