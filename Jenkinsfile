@@ -1,19 +1,29 @@
 pipeline {
     agent any
+    tools {
+    maven 'Maven-3.9.12'
+    }
     stages {
-        stage('Compile') {
+        stage('Check') {
             steps {
-                echo 'Compile stage completed'
+                git 'https://github.com/Amir-noori-github/SpeedApp.git'
             }
         }
-        stage('Test') {
+        stage('Build') {
             steps {
-                echo 'Test stage completed'
+                bat 'mvn clean install' // sh for linux and ios
             }
         }
-        stage('Deploy') {
+
+        stage('Generate Report') {
             steps {
-                echo 'Deploy stage completed'
+                bat 'mvn jacoco:report'
+            }
+        }
+
+        stage('Publish Coverage Report') {
+            steps {
+                jacoco()
             }
         }
     }
