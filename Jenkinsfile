@@ -20,15 +20,27 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Job') {
             steps {
                 bat 'mvn clean install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat 'mvn test'
             }
         }
 
         stage('Generate Report') {
             steps {
                 bat 'mvn jacoco:report'
+            }
+        }
+
+        stage('Publish Test Result') {
+            steps {
+                junit '**/target/surefire-reports/*.xml'
             }
         }
 
